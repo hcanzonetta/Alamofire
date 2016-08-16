@@ -124,14 +124,21 @@ public class NetworkReachabilityManager {
     /// - returns: The new `NetworkReachabilityManager` instance.
     public convenience init?() {
         var address = sockaddr_in()
-        address.sin_len = UInt8(sizeofValue(address))
+        address.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
         address.sin_family = sa_family_t(AF_INET)
+        
+    
+        let pointer = UnsafeMutablePointer<sockaddr_in>.allocate(capacity: MemoryLayout<sockaddr_in>.size)
+        pointer.initialize(to: address)
+        let unsafePointer = UnsafePointer(pointer)
+        
+        let reachability = unsafePointer.withMemoryRebound(to: sockaddr.self, capacity: MemoryLayout<sockaddr>.size) {
+            return SCNetworkReachabilityCreateWithAddress(nil, $0)
+        }
+        
+        guard let r = reachability else { return nil }
 
-        guard let reachability = withUnsafePointer(&address, {
-            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
-        }) else { return nil }
-
-        self.init(reachability: reachability)
+        self.init(reachability: r)
     }
 
     private init(reachability: SCNetworkReachability) {
@@ -151,7 +158,7 @@ public class NetworkReachabilityManager {
     @discardableResult
     public func startListening() -> Bool {
         var context = SCNetworkReachabilityContext(version: 0, info: nil, retain: nil, release: nil, copyDescription: nil)
-        context.info = UnsafeMutablePointer(Unmanaged.passUnretained(self).toOpaque())
+        context.info = UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque())
 
         let callbackEnabled = SCNetworkReachabilitySetCallback(
             reachability,

@@ -25,7 +25,7 @@
 import Foundation
 
 /// Used to store all response data returned from a completed `Request`.
-public struct Response<ValueType, ErrorType: Error> {
+public struct Response<ValueType, ErrorType: NSError> {
     /// The URL request sent to the server.
     public let request: URLRequest?
 

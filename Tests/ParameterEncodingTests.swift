@@ -470,7 +470,7 @@ class JSONParameterEncodingTestCase: ParameterEncodingTestCase {
                 "b": [2, 2],
                 "c": [3, 3, 3]
             ]
-        ]
+        ] as [String : Any]
 
         // When
         let (URLRequest, error) = encoding.encode(self.urlRequest, parameters: parameters)
@@ -550,7 +550,7 @@ class PropertyListParameterEncodingTestCase: ParameterEncodingTestCase {
                 "b": [2, 2],
                 "c": [3, 3, 3]
             ]
-        ]
+        ] as [String : Any]
 
         // When
         let (URLRequest, error) = encoding.encode(self.urlRequest, parameters: parameters)
@@ -593,7 +593,7 @@ class PropertyListParameterEncodingTestCase: ParameterEncodingTestCase {
         let parameters = [
             "date": date,
             "data": data
-        ]
+        ] as [String : Any]
 
         // When
         let (urlRequest, error) = encoding.encode(self.urlRequest, parameters: parameters as? [String : AnyObject])
@@ -671,7 +671,7 @@ class CustomParameterEncodingTestCase: ParameterEncodingTestCase {
         // Then
         let url = URL(string: "https://example.com")!
         let urlRequest = URLRequest(url: url)
-        let parameters: [String: AnyObject] = ["foo": "bar"]
+        let parameters: [String: AnyObject] = ["foo": "bar" as AnyObject]
 
         let result = encoding.encode(urlRequest, parameters: parameters)
         XCTAssertEqual(result.0.urlString, "https://example.com?foo=bar")

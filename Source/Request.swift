@@ -331,10 +331,10 @@ extension Request: CustomDebugStringConvertible {
             }
         }
 
-        var headers: [NSObject: AnyObject] = [:]
+        var headers: [AnyHashable: Any] = [:]
 
         if let additionalHeaders = session.configuration.httpAdditionalHeaders {
-            for (field, value) in additionalHeaders where field != "Cookie" {
+            for (field, value) in additionalHeaders where field != AnyHashable("Cookie") {
                 headers[field] = value
             }
         }

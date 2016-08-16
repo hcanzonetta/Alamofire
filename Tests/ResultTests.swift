@@ -27,7 +27,7 @@ import Foundation
 import XCTest
 
 class ResultTestCase: BaseTestCase {
-    let error = NSError(code: .statusCodeValidationFailed, failureReason: "Status code validation failed")
+    let error = NSError(domain: "Status code validation failed", code: .statusCodeValidationFailed)
 
     // MARK: - Is Success Tests
 
