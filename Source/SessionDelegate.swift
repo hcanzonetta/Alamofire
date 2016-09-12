@@ -198,7 +198,7 @@ extension SessionDelegate: URLSessionDelegate {
     public func urlSession(
         _ session: URLSession,
         didReceive challenge: URLAuthenticationChallenge,
-        completionHandler: ((URLSession.AuthChallengeDisposition, URLCredential?) -> Void))
+        completionHandler: @escaping ((URLSession.AuthChallengeDisposition, URLCredential?) -> Void))
     {
         guard sessionDidReceiveChallengeWithCompletion == nil else {
             sessionDidReceiveChallengeWithCompletion?(session, challenge, completionHandler)
@@ -258,7 +258,7 @@ extension SessionDelegate: URLSessionTaskDelegate {
         task: URLSessionTask,
         willPerformHTTPRedirection response: HTTPURLResponse,
         newRequest request: URLRequest,
-        completionHandler: (URLRequest?) -> Void)
+        completionHandler: @escaping (URLRequest?) -> Void)
     {
         guard taskWillPerformHTTPRedirectionWithCompletion == nil else {
             taskWillPerformHTTPRedirectionWithCompletion?(session, task, response, request, completionHandler)
@@ -393,7 +393,7 @@ extension SessionDelegate: URLSessionDataDelegate {
         _ session: URLSession,
         dataTask: URLSessionDataTask,
         didReceive response: URLResponse,
-        completionHandler: (URLSession.ResponseDisposition) -> Void)
+        completionHandler: @escaping (URLSession.ResponseDisposition) -> Void)
     {
         guard dataTaskDidReceiveResponseWithCompletion == nil else {
             dataTaskDidReceiveResponseWithCompletion?(session, dataTask, response, completionHandler)

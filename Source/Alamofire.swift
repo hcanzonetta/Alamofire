@@ -154,7 +154,7 @@ public func request(_ urlRequest: URLRequestConvertible) -> Request {
 @discardableResult
 public func download(
     _ urlString: URLStringConvertible,
-    to destination: Request.DownloadFileDestination,
+    to destination: @escaping Request.DownloadFileDestination,
     withMethod method: HTTPMethod,
     parameters: [String: AnyObject]? = nil,
     encoding: ParameterEncoding = .url,
@@ -181,7 +181,7 @@ public func download(
 @discardableResult
 public func download(
     _ urlRequest: URLRequestConvertible,
-    to destination: Request.DownloadFileDestination)
+    to destination: @escaping Request.DownloadFileDestination)
     -> Request
 {
     return SessionManager.default.download(urlRequest, to: destination)
@@ -199,7 +199,7 @@ public func download(
 ///
 /// - returns: The created download `Request`.
 @discardableResult
-public func download(resourceWithin resumeData: Data, to destination: Request.DownloadFileDestination) -> Request {
+public func download(resourceWithin resumeData: Data, to destination: @escaping Request.DownloadFileDestination) -> Request {
     return SessionManager.default.download(resourceWithin: resumeData, to: destination)
 }
 

@@ -276,7 +276,7 @@ public class SessionManager {
     @discardableResult
     public func download(
         _ urlString: URLStringConvertible,
-        to destination: Request.DownloadFileDestination,
+        to destination: @escaping Request.DownloadFileDestination,
         withMethod method: HTTPMethod,
         parameters: [String: AnyObject]? = nil,
         encoding: ParameterEncoding = .url,
@@ -301,7 +301,7 @@ public class SessionManager {
     @discardableResult
     public func download(
         _ urlRequest: URLRequestConvertible,
-        to destination: Request.DownloadFileDestination)
+        to destination: @escaping Request.DownloadFileDestination)
         -> Request
     {
         return download(.request(urlRequest.urlRequest), to: destination)
@@ -321,7 +321,7 @@ public class SessionManager {
     ///
     /// - returns: The created download `Request`.
     @discardableResult
-    public func download(resourceWithin resumeData: Data, to destination: Request.DownloadFileDestination) -> Request {
+    public func download(resourceWithin resumeData: Data, to destination: @escaping Request.DownloadFileDestination) -> Request {
         return download(.resumeData(resumeData), to: destination)
     }
 
@@ -329,7 +329,7 @@ public class SessionManager {
 
     private func download(
         _ downloadable: Downloadable,
-        to destination: Request.DownloadFileDestination)
+        to destination: @escaping Request.DownloadFileDestination)
         -> Request
     {
         var downloadTask: URLSessionDownloadTask!
